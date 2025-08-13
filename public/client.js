@@ -3,7 +3,20 @@ const socket = io();
 // Entrada na sala
 let room = prompt("Digite o nome da sala:");
 socket.emit('joinRoom', room);
+// Botão para mostrar/esconder chat
+const toggleChatBtn = document.createElement('button');
+toggleChatBtn.id = 'toggleChatBtn';
+toggleChatBtn.textContent = 'Chat';
+document.body.appendChild(toggleChatBtn);
 
+toggleChatBtn.addEventListener('click', () => {
+  const chat = document.getElementById('chat');
+  if(chat.style.display === 'none' || !chat.style.display){
+    chat.style.display = 'block';
+  } else {
+    chat.style.display = 'none';
+  }
+});
 // Chat
 const messagesDiv = document.getElementById('messages');
 const msgForm = document.getElementById('msgForm');
