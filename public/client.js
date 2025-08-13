@@ -52,7 +52,7 @@ const msgInput = document.getElementById('msgInput');
 const bagBtn = document.getElementById('bagBtn');
 
 msgForm.addEventListener('submit', e => {
-  e.preventDefault();
+  e.preventDefault(); // impede de recarregar a página
   if (msgInput.value) {
     socket.emit('chatMessage', msgInput.value);
     msgInput.value = '';
