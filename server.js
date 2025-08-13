@@ -37,7 +37,8 @@ io.on('connection', (socket) => {
 
   socket.on('giveBag', () => {
     if (currentRoom) {
-      io.to(currentRoom).emit('message', { sender: 'SYSTEM', text: `${socket.id} deu um saquinho 🛍️` });
+      io.to(currentRoom).emit('message', { sender: 'SYSTEM', text: `${socket.id} deu um soquinho 👊` });
+      io.to(currentRoom).emit('playerHit', socket.id); // avisa todos que alguém socou
     }
   });
 
