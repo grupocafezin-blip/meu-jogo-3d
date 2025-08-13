@@ -1,12 +1,35 @@
 const socket = io();
-let playerName = prompt("Digite seu nome:");
-let playerColor = prompt("Digite uma cor (red, blue, #ff00ff):");
+// Função para pedir nome, cor e sala
+function getPlayerInfo(){
+    let name = null;
+    while(!name){
+        name = prompt("Digite seu nome:");
+    }
 
-// aplicando cor no personagem
+    let color = null;
+    while(!color){
+        color = prompt("Digite a cor do seu personagem (red, blue, #ff00ff):");
+    }
+
+    let room = null;
+    while(!room){
+        room = prompt("Digite o nome da sala:");
+    }
+
+    return {name, color, room};
+}
+
+// Chama função
+const playerInfo = getPlayerInfo();
+const playerName = playerInfo.name;
+const playerColor = playerInfo.color;
+const room = playerInfo.room;
+
+// Aplica cor
 body.material.color.set(playerColor);
 head.material.color.set(playerColor);
-// Entrada na sala
-let room = prompt("Digite o nome da sala:");
+
+// Entra na sala
 socket.emit('joinRoom', room);
 // Botão para mostrar/esconder chat
 const toggleChatBtn = document.createElement('button');
