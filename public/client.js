@@ -69,27 +69,44 @@ head.position.y = 2;
 body.add(head);
 scene.add(body);
 
-camera.position.z = 5;
+// Câmera segue o jogador
+camera.position.set(0, 5, 10); // altura atrás do jogador
 
-// Joystick
-const joystick = nipplejs.create({
-  zone: document.body,
-  mode: 'static',
-  position: { left: '50px', bottom: '50px' }
+let pointerDown = false;
+let prevX, prevY;
+
+document.addEventListener('pointerdown', e => {
+  pointerDown = true;
+  prevX = e.clientX;
+  prevY = e.clientY;
 });
 
-let velocity = { x: 0, z: 0 };
-joystick.on('move', (evt, data) => {
-  const rad = data.angle.radian;
-  velocity.x = Math.cos(rad) * 0.1;
-  velocity.z = Math.sin(rad) * 0.1;
+document.addEventListener('pointermove', e => {
+  if(!pointerDown) return;
+  const dx = e.clientX - prevX;
+  const dy = e.clientY - prevY;
+  body.rotation.y -= dx * 0.005; // rotaciona personagem horizontal
+  camera.rotation.x -= dy * 0.005; // rotaciona câmera vertical
+  prevX = e.clientX;
+  prevY = e.clientY;
 });
-joystick.on('end', () => { velocity.x = 0; velocity.z = 0; });
+
+document.addEventListener('pointerup', e => {
+  pointerDown = false;
+});
 
 function animate() {
   requestAnimationFrame(animate);
+  // Movimento do jogador
   body.position.x += velocity.x;
   body.position.z += velocity.z;
+
+  // Câmera segue de trás
+  const relativeCameraOffset = new THREE.Vector3(0, 5, 10);
+  const cameraOffset = relativeCameraOffset.applyMatrix4(body.matrixWorld);
+  camera.position.lerp(cameraOffset, 0.1);
+  camera.lookAt(body.position);
+
   renderer.render(scene, camera);
 }
 animate();
