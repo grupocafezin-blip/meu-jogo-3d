@@ -110,3 +110,17 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+bagBtn.addEventListener('click', () => {
+  socket.emit('giveBag'); // avisa outros jogadores
+  // efeito local
+  body.position.y -= 0.2;
+  setTimeout(() => body.position.y += 0.2, 200);
+});
+
+socket.on('playerHit', id => {
+  if(socket.id === id){
+    // jogador foi atingido
+    body.position.y = 0; // cai no chão
+    setTimeout(() => body.position.y = 0, 3000); // 3s
+  }
+});
