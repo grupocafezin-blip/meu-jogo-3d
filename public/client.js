@@ -1,5 +1,10 @@
 const socket = io();
+let playerName = prompt("Digite seu nome:");
+let playerColor = prompt("Digite uma cor (red, blue, #ff00ff):");
 
+// aplicando cor no personagem
+body.material.color.set(playerColor);
+head.material.color.set(playerColor);
 // Entrada na sala
 let room = prompt("Digite o nome da sala:");
 socket.emit('joinRoom', room);
