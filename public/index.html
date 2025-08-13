@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Jogo 3D</title>
-
     <style>
         body {
             margin: 0;
@@ -21,6 +20,7 @@
             color: white;
             display: none;
             flex-direction: column;
+            z-index: 10;
         }
         #messages {
             flex: 1;
@@ -38,6 +38,12 @@
         #bagBtn {
             margin: 5px;
         }
+        #toggleChatBtn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 20;
+        }
     </style>
 </head>
 <body>
@@ -53,17 +59,30 @@
     </div>
 
     <!-- Botão para mostrar/esconder chat -->
-    <button id="toggleChatBtn" style="position: fixed; top: 10px; left: 10px; z-index: 999;">
-        Chat
-    </button>
+    <button id="toggleChatBtn">Chat</button>
 
-    <!-- 1️⃣ Biblioteca do Socket.IO (vem do servidor Node.js) -->
+    <!-- Socket.IO (vem do servidor Node.js) -->
     <script src="/socket.io/socket.io.js"></script>
 
-    <!-- 2️⃣ Biblioteca Three.js -->
+    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- 3️⃣ Seu script principal do jogo -->
+    <!-- Seu script principal -->
+    <script src="js/game.js"></script>
+
+    <!-- Script de inicialização -->
+    <script>
+        // Aguarda o carregamento da página para iniciar o jogo
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof initGame === 'function') {
+                initGame(); // função que vamos garantir que exista no game.js
+            } else {
+                console.error("Função initGame() não encontrada no game.js");
+            }
+        });
+    </script>
+</body>
+</html>    <!-- 3️⃣ Seu script principal do jogo -->
     <script src="js/game.js"></script>
 
 </body>
