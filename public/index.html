@@ -1,34 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jogo 3D Online</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Jogo 3D</title>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #chat {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 300px;
+            height: 200px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            display: none;
+            flex-direction: column;
+        }
+        #messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 5px;
+        }
+        #msgForm {
+            display: flex;
+        }
+        #msgInput {
+            flex: 1;
+            border: none;
+            padding: 5px;
+        }
+        #bagBtn {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
-  <!-- Overlay de erros (mostra erros no celular) -->
-  <pre id="errLog" style="position:fixed;left:10px;bottom:10px;max-width:90vw;max-height:30vh;overflow:auto;background:rgba(0,0,0,.6);color:#fff;padding:8px;border-radius:6px;z-index:9999;display:none;"></pre>
-
-  <!-- Chat (começa escondido via CSS) -->
-  <div id="chat">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <strong>Chat</strong>
-      <button id="closeChat">Fechar</button>
+    
+    <!-- Chat -->
+    <div id="chat">
+        <div id="messages"></div>
+        <form id="msgForm">
+            <input id="msgInput" autocomplete="off" placeholder="Digite sua mensagem..." />
+            <button type="submit">Enviar</button>
+        </form>
+        <button id="bagBtn">Dar Sacola</button>
     </div>
-    <div id="messages"></div>
-    <form id="msgForm">
-      <input id="msgInput" autocomplete="off" placeholder="Digite..." />
-      <button type="submit">Enviar</button>
-    </form>
-    <button id="bagBtn" title="Dar soco">Soco 👊</button>
-  </div>
 
-  <!-- Botão para abrir o chat -->
-  <button id="toggleChatBtn" title="Abrir chat">Chat</button>
+    <!-- Botão para mostrar/esconder chat -->
+    <button id="toggleChatBtn" style="position: fixed; top: 10px; left: 10px; z-index: 999;">
+        Chat
+    </button>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  <script src="client.js"></script>
+    <!-- 1️⃣ Biblioteca do Socket.IO (vem do servidor Node.js) -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- 2️⃣ Biblioteca Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- 3️⃣ Seu script principal do jogo -->
+    <script src="js/game.js"></script>
+
 </body>
 </html>
